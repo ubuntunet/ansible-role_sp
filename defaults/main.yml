@@ -1,3 +1,4 @@
+federation: marida
 fqdn: sp.ubuntunet.net
 entity_id: https://{{ fqdn }}/shibboleth
 default_ds_url: http://cds.ubuntunet.net:8080/discovery/WAYF
