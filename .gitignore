@@ -2,4 +2,4 @@
 *.key
 *.pem
 
-defaults/main.yml
+vars/main.yml
