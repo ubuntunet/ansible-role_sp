@@ -1,7 +1,7 @@
-fqdn: sp.ubuntunet.net
+fqdn: djnro.ubuntunet.net
 entity_id: https://{{ fqdn }}/shibboleth
 default_ds_url: http://cds.ubuntunet.net:8080/discovery/WAYF
 show_attribute_values: false
-support_email: unida@ubuntunet.net
+support_email: marida@ubuntunet.net
 metadata_url: https://rr.ubuntunet.net/metadata/federation/{{ federation }}/metadata.xml
 metadata_file: metadata.xml
