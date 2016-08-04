@@ -2,7 +2,7 @@
 # https://www.switch.ch/aai/guides/sp/installation/?os=ubuntu
 
 # 2. Prerequisites
-- name: Install needed utility programs
+- name: Install required utility programs
   apt: pkg={{ item }} update_cache=yes cache_valid_time=36000
   with_items:
     - ntp
