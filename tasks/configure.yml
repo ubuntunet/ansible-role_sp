@@ -159,8 +159,8 @@
 
 - name: Copy Federation Metadata signer certificate
   copy: >
-    src=fedsigner
-    dest=/etc/shibboleth/fedsigner.pem
+    src=fedsigner.crt.pem
+    dest=/etc/shibboleth/fedsigner.crt.pem
   notify: restart shibboleth
 
 - name: Download Metadata Backup File from RR 

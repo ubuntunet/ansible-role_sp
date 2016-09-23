@@ -85,14 +85,12 @@
             url="{{ metadata_url }}"
             backingFilePath="/etc/shibboleth/{{ metadata_file }}"
             reloadInterval="7200">
-            <MetadataFilter type="RequireValidUntil" maxValidityInterval="2419200"/>
-<!--
-            <MetadataFilter type="Signature" certificate="fedsigner.pem"/>
+            <MetadataFilter type="RequireValidUntil" maxValidityInterval="P14D" />
+            <MetadataFilter type="Signature" certificate="fedsigner.crt.pem" />
             <DiscoveryFilter type="Blacklist" matcher="EntityAttributes" trimTags="true"
               attributeName="http://macedir.org/entity-category"
               attributeNameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"
               attributeValue="http://refeds.org/category/hide-from-discovery" />
- -->
         </MetadataProvider>
 
         <!-- Example of locally maintained metadata. -->
