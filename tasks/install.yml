@@ -24,8 +24,8 @@
   command: apt-key add /usr/local/dist/SWITCHaai-swdistrib.asc
 
 - name: Copy Repository
-  copy: > 
-    src=SWITCHaai-swdistrib.list 
+  template: > 
+    src=SWITCHaai-swdistrib.list.j2
     dest=/etc/apt/sources.list.d/
 
 - name: Refresh Repository
