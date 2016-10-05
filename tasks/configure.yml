@@ -128,6 +128,10 @@
 #     dest=roles/shibboleth/files/{{ fqdn }}_sp-cert.pem 
 #     flat=yes
 
+- name: Copy logo
+  copy: >
+    src= {{ sp_logo }}
+    dest=/etc/shibboleth/{{ sp_logo }}
 
 
 # 5. Shibboleth Configuration
