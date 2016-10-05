@@ -1,8 +1,24 @@
-federation: marida
+federation: MyFed
 fqdn: sp.example.com
+
 entity_id: https://{{ fqdn }}/shibboleth
-default_ds_url: http://cds.ubuntunet.net:8080/discovery/WAYF
+
+organisation_name: My Organisation
+organisation_display_name: '{{ organisation_name }}'
+organisation_url: https://example.net
+
+support_first_name: Supp
+support_last_name: Orter
+support_email: support@example.net
+admin_first_name: Ad
+admin_last_name: Min
+technical_first_name: Tech
+technical_last_name: Nical
+technical_email: eduid@example.net
+
+default_ds_url: http://cds.example.net:8080/discovery/WAYF
 show_attribute_values: false
-support_email:
-metadata_url: https://rr.ubuntunet.net/metadata/federation/{{ federation }}/metadata.xml
+metadata_url: https://rr.ubuntunet.net/signedmetadata/federation/{{ federation }}/metadata.xml
+#metadata_url: https://rr.ubuntunet.net/metadata/federation/{{ federation }}/metadata.xml
 metadata_file: metadata.xml
+
