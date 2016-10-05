@@ -3,6 +3,7 @@
     xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion"
     xmlns:samlp="urn:oasis:names:tc:SAML:2.0:protocol"
     xmlns:md="urn:oasis:names:tc:SAML:2.0:metadata"
+    xmlns:mdui="urn:oasis:names:tc:SAML:metadata:ui"
     clockSkew="180">
 
     <!--
@@ -58,7 +59,34 @@
             <Logout>SAML2 Local</Logout>
 
             <!-- Extension service that generates "approximate" metadata based on SP configuration. -->
-            <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/>
+            <!-- <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/> -->
+            <Handler type="MetadataGenerator" Location="/Metadata" signing="true">
+                <mdui:UIInfo>
+                    <mdui:DisplayName xml:lang="en">{{ sp_name }}</mdui:DisplayName>
+                    <mdui:Description xml:lang="en">{{ sp_description }}</mdui:Description>
+                    <mdui:Logo height="300" width="500">{{ sp_logo }}</mdui:Logo>
+                </mdui:UIInfo>
+                <md:Organization>
+                    <md:OrganizationName xml:lang="en">{{ organisation_name }}</md:OrganizationName>
+                    <md:OrganizationDisplayName xml:lang="en">{{ organisation_display_name }}</md:OrganizationDisplayName>
+                    <md:OrganizationURL xml:lang="en">{{ organisation_url }}</md:OrganizationURL>
+                </md:Organization>
+                <md:ContactPerson contactType="support">
+                    <md:GivenName>{{ support_first_name }}</md:GivenName>
+                    <md:SurName>{{ support_last_name }}</md:SurName>
+                    <md:EmailAddress>{{ support_email }}</md:EmailAddress>
+                </md:ContactPerson>
+                <md:ContactPerson contactType="technical">
+                    <md:GivenName>{{ technical_first_name }}</md:GivenName>
+                    <md:SurName>{{ technical_last_name }}</md:SurName>
+                    <md:EmailAddress>{{ technical_email }}</md:EmailAddress>
+                </md:ContactPerson>
+                <md:ContactPerson contactType="administrative">
+                    <md:GivenName>{{ admin_first_name }}</md:GivenName>
+                    <md:SurName>{{ admin_last_name }}</md:SurName>
+                    <md:EmailAddress>{{ admin_email }}</md:EmailAddress>
+                </md:ContactPerson>
+            </Handler>
 
             <!-- Status reporting service. -->
             <Handler type="Status" Location="/Status" acl="127.0.0.1 ::1"/>
@@ -93,18 +121,6 @@
               attributeValue="http://refeds.org/category/hide-from-discovery" />
         </MetadataProvider>
 
-        <!-- Example of locally maintained metadata. -->
-
-        <!--
-            <MetadataProvider type="XML" validate="true" file="metadata.xml"/>
-        -->
-
-        <!--
-        <MetadataProvider type="XML"
-            url="{{ metadata_url }}" backingFilePath="/etc/shibboleth/{{ metadata_file }}">
-            <MetadataFilter type="RequireValidUntil" maxValidityInterval="2419200"/>
-        </MetadataProvider>
-        -->
 
         <!-- Map to extract attributes from SAML assertions. -->
         <AttributeExtractor type="XML"
