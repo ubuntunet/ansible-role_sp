@@ -7,6 +7,10 @@ organisation_name: My Organisation
 organisation_display_name: '{{ organisation_name }}'
 organisation_url: https://example.net
 
+sp_name: Dummy Service Provider for UbuntuNet
+sp_description: A dummy Service Provider for UbuntuNet Alliance
+sp_logo: logo.png
+
 support_first_name: Supp
 support_last_name: Orter
 support_email: support@example.net
