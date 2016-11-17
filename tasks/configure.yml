@@ -36,15 +36,15 @@
 
 ################## Then < Copy existing certificates to remote #######################
 - name: Copy signing key
-  copy: > 
-    src={{ fqdn }}_sp-key.pem
-    dest=/etc/shibboleth/sp-key.pem
+  copy:
+    src: "{{ fqdn }}_sp-key.pem"
+    dest: /etc/shibboleth/sp-key.pem
   when: (have_sign_cert.stat.exists == True) and (have_sign_key.stat.exists == True)
 
 - name: Copy signing certificate
-  copy: > 
-    src={{ fqdn }}_sp-cert.pem
-    dest=/etc/shibboleth/sp-cert.pem
+  copy:
+    src: "{{ fqdn }}_sp-cert.pem"
+    dest: /etc/shibboleth/sp-cert.pem
   when: (have_sign_cert.stat.exists == True) and (have_sign_key.stat.exists == True)
 
 ############ Else > Create self-signed certificates ##################################
@@ -58,17 +58,17 @@
 
 
 - name: Copy signing cert to this machine, if it exists
-  fetch: >
-    src=/etc/shibboleth/sp-cert.pem 
-    dest=roles/shibboleth/files/{{ fqdn }}_sp-cert.pem
-    flat=yes
+  fetch:
+    src: /etc/shibboleth/sp-cert.pem 
+    dest: "roles/shibboleth/files/{{ fqdn }}_sp-cert.pem"
+    flat: yes
   when: (have_sign_cert.stat.exists == False) and (have_sign_key.stat.exists == False)
 
 - name: Copy signing key to this machine, if it exists
-  fetch: >
-    src=/etc/shibboleth/sp-key.pem 
-    dest=roles/shibboleth/files/{{ fqdn }}_sp-key.pem
-    flat=yes
+  fetch:
+    src: /etc/shibboleth/sp-key.pem 
+    dest: "roles/shibboleth/files/{{ fqdn }}_sp-key.pem"
+    flat: yes
   when: (have_sign_cert.stat.exists == False) and (have_sign_key.stat.exists == False)
 
 
@@ -129,29 +129,29 @@
 #     flat=yes
 
 - name: Copy logo
-  copy: >
-    src= {{ sp_logo }}
-    dest=/etc/shibboleth/{{ sp_logo }}
+  copy:
+    src: "{{ sp.logo }}"
+    dest: "/etc/shibboleth/{{ sp.logo }}"
 
 
 # 5. Shibboleth Configuration
 
 - name: Copy Shibboleth config file
-  template: >
-    src=shibboleth2.xml.j2
-    dest=/etc/shibboleth/shibboleth2.xml
+  template:
+    src: shibboleth2.xml.j2
+    dest: /etc/shibboleth/shibboleth2.xml
   notify: restart shibboleth
 
 - name: Copy attribute-map file
-  template: >
-    src=attribute-map.xml.j2
-    dest=/etc/shibboleth/attribute-map.xml
+  template:
+    src: attribute-map.xml.j2
+    dest: /etc/shibboleth/attribute-map.xml
   notify: restart shibboleth
 
 - name: Copy attribute-policy file
-  template: >
-    src=attribute-policy.xml.j2
-    dest=/etc/shibboleth/attribute-policy.xml
+  template:
+    src: attribute-policy.xml.j2
+    dest: /etc/shibboleth/attribute-policy.xml
   notify: restart shibboleth
 
 

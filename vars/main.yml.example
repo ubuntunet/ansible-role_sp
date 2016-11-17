@@ -3,10 +3,6 @@ fqdn: sp.example.com
 
 entity_id: https://{{ fqdn }}/shibboleth
 
-organisation_name: My Organisation
-organisation_display_name: '{{ organisation_name }}'
-organisation_url: https://example.net
-
 support_first_name: Supp
 support_last_name: Orter
 support_email: support@example.net

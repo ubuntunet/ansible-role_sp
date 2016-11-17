@@ -62,14 +62,14 @@
             <!-- <Handler type="MetadataGenerator" Location="/Metadata" signing="false"/> -->
             <Handler type="MetadataGenerator" Location="/Metadata" signing="true">
                 <mdui:UIInfo>
-                    <mdui:DisplayName xml:lang="en">{{ sp_name }}</mdui:DisplayName>
-                    <mdui:Description xml:lang="en">{{ sp_description }}</mdui:Description>
-                    <mdui:Logo height="300" width="500">{{ sp_logo }}</mdui:Logo>
+                    <mdui:DisplayName xml:lang="en">{{ sp.name }}</mdui:DisplayName>
+                    <mdui:Description xml:lang="en">{{ sp.description }}</mdui:Description>
+                    <mdui:Logo height="300" width="500">{{ sp.logo }}</mdui:Logo>
                 </mdui:UIInfo>
                 <md:Organization>
-                    <md:OrganizationName xml:lang="en">{{ organisation_name }}</md:OrganizationName>
-                    <md:OrganizationDisplayName xml:lang="en">{{ organisation_display_name }}</md:OrganizationDisplayName>
-                    <md:OrganizationURL xml:lang="en">{{ organisation_url }}</md:OrganizationURL>
+                    <md:OrganizationName xml:lang="en">{{ institution.name }}</md:OrganizationName>
+                    <md:OrganizationDisplayName xml:lang="en">{{ institution.display_name }}</md:OrganizationDisplayName>
+                    <md:OrganizationURL xml:lang="en">{{ institution.url }}</md:OrganizationURL>
                 </md:Organization>
                 <md:ContactPerson contactType="support">
                     <md:GivenName>{{ support_first_name }}</md:GivenName>
