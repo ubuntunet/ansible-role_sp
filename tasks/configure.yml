@@ -128,9 +128,9 @@
 #     dest=roles/shibboleth/files/{{ fqdn }}_sp-cert.pem 
 #     flat=yes
 
-- name: Copy logo
+- name: Copy Logo
   copy:
-    src: "{{ sp.logo }}"
+    src: "{{ sp.logo | default('logo-default.png')}}"
     dest: "/etc/shibboleth/{{ sp.logo }}"
 
 
