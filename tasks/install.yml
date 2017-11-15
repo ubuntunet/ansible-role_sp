@@ -3,7 +3,10 @@
 
 # 2. Prerequisites
 - name: Install required utility programs
-  apt: pkg={{ item }} update_cache=yes cache_valid_time=36000
+  apt: 
+    pkg: "{{ item }}"
+    update_cache: yes 
+    cache_valid_time: 36000
   with_items:
     - ntp
     - unzip
@@ -11,22 +14,22 @@
 # 3. Shibboleth Repository
 
 - name: Create download directory
-  file: >
-    path=/usr/local/dist
-    state=directory
+  file:
+    path: /usr/local/dist
+    state: directory
 
 - name: Download Switch Repository Key
-  get_url: > 
-    url=http://pkg.switch.ch/switchaai/SWITCHaai-swdistrib.asc 
-    dest=/usr/local/dist/SWITCHaai-swdistrib.asc
+  get_url:
+    url: http://pkg.switch.ch/switchaai/SWITCHaai-swdistrib.asc 
+    dest: /usr/local/dist/SWITCHaai-swdistrib.asc
 
 - name: Add Repository Key
   command: apt-key add /usr/local/dist/SWITCHaai-swdistrib.asc
 
 - name: Copy Repository
-  template: > 
-    src=SWITCHaai-swdistrib.list.j2
-    dest=/etc/apt/sources.list.d/SWITCHaai-swdistrib.list
+  template:
+    src: SWITCHaai-swdistrib.list.j2
+    dest: /etc/apt/sources.list.d/SWITCHaai-swdistrib.list
 
 - name: Refresh Repository
   apt: update_cache=yes
@@ -35,6 +38,9 @@
 # 4. Installation
 
 - name: Install Shibboleth
-  apt: pkg=shibboleth update_cache=yes cache_valid_time=36000
+  apt: 
+    pkg: shibboleth
+    update_cache: yes 
+    cache_valid_time: 36000
 
 
