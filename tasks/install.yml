@@ -1,3 +1,4 @@
+---
 # I Installation
 # https://www.switch.ch/aai/guides/sp/installation/?os=ubuntu
 
@@ -12,7 +13,6 @@
     - unzip
 
 # 3. Shibboleth Repository
-
 - name: Create download directory
   file:
     path: /usr/local/dist
@@ -36,7 +36,6 @@
 
 
 # 4. Installation
-
 - name: Install Shibboleth
   apt: 
     pkg: shibboleth

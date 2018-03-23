@@ -8,6 +8,7 @@ support_last_name: Orter
 support_email: support@example.net
 admin_first_name: Ad
 admin_last_name: Min
+admin_email: admin@example.net
 technical_first_name: Tech
 technical_last_name: Nical
 technical_email: eduid@example.net
