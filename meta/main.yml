@@ -21,12 +21,12 @@ galaxy_info:
   platforms:
     - name: Ubuntu
       versions:
-        - 16.04
+        - xenial
 
   galaxy_tags:
-    - eduID
-    - Shibboleth
-    - ServiceProvider
+    - eduid
+    - shibboleth
+    - serviceprovider
 
 dependencies: []
   # List your role dependencies here, one per line. Be sure to remove the '[]' above,
