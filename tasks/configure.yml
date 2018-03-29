@@ -6,14 +6,14 @@
 ############ If Certificates exist? ##################################
 
 - name: Check if there is a signing certificate locally
-  become: False
+  become: no
   local_action:
     module: stat
     path: "roles/shibboleth/files/{{ fqdn }}_sp-cert.pem"
   register: have_sign_cert
 
 - name: Check if there is a signing key locally
-  become: False
+  become: no
   local_action:
     module: stat
     path: "roles/shibboleth/files/{{ fqdn }}_sp-key.pem"
@@ -22,12 +22,14 @@
 
 ################## Then < Copy existing certificates to remote #######################
 - name: Copy signing key
+  become: yes
   copy:
     src: "{{ fqdn }}_sp-key.pem"
     dest: /etc/shibboleth/sp-key.pem
   when: (have_sign_cert.stat.exists == True) and (have_sign_key.stat.exists == True)
 
 - name: Copy signing certificate
+  become: yes
   copy:
     src: "{{ fqdn }}_sp-cert.pem"
     dest: /etc/shibboleth/sp-cert.pem
@@ -37,6 +39,7 @@
 
 # 4. X.509 certificate for SAML message signing/encrypting
 - name: Create self-signed certificate
+  become: yes
   command: shib-keygen -f -u _shibd -h {{ fqdn }} -y 3 -e https://{{ fqdn }}/shibboleth -o /etc/shibboleth/
   args:
     creates: /etc/shibboleth/sp-key.pem
@@ -44,6 +47,7 @@
 
 
 - name: Copy signing cert to this machine, if it exists
+  become: yes
   fetch:
     src: /etc/shibboleth/sp-cert.pem 
     dest: "roles/shibboleth/files/{{ fqdn }}_sp-cert.pem"
@@ -51,6 +55,7 @@
   when: (have_sign_cert.stat.exists == False) and (have_sign_key.stat.exists == False)
 
 - name: Copy signing key to this machine, if it exists
+  become: yes
   fetch:
     src: /etc/shibboleth/sp-key.pem 
     dest: "roles/shibboleth/files/{{ fqdn }}_sp-key.pem"
@@ -58,6 +63,7 @@
   when: (have_sign_cert.stat.exists == False) and (have_sign_key.stat.exists == False)
 
 - name: Copy Logo
+  become: yes
   copy:
     src: "{{ sp.logo | default('logo-default.png')}}"
     dest: "/etc/shibboleth/{{ sp.logo }}"
@@ -65,36 +71,42 @@
 
 # 5. Shibboleth Configuration
 - name: Copy Shibboleth config file
+  become: yes
   template:
     src: shibboleth2.xml.j2
     dest: /etc/shibboleth/shibboleth2.xml
   notify: restart shibboleth
 
 - name: Copy attribute-map file
+  become: yes
   template:
     src: attribute-map.xml.j2
     dest: /etc/shibboleth/attribute-map.xml
   notify: restart shibboleth
 
 - name: Copy attribute-policy file
+  become: yes
   template:
     src: attribute-policy.xml.j2
     dest: /etc/shibboleth/attribute-policy.xml
   notify: restart shibboleth
 
 - name: Copy Federation Metadata signer certificate
+  become: yes
   copy:
     src: fedsigner.crt.pem
     dest: /etc/shibboleth/fedsigner.crt.pem
   notify: restart shibboleth
 
 - name: Download Metadata Backup File from RR 
+  become: yes
   get_url:
     url: "{{ metadata_url }}"
     dest: "/etc/shibboleth/{{ metadata_file }}"
   notify: restart shibboleth
 
 - name: Hand /etc/shibboleth over to the _shibd user
+  become: yes
   file:
     path: /etc/shibboleth
     owner: _shibd

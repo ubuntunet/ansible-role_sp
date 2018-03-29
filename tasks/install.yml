@@ -4,6 +4,7 @@
 
 # 2. Prerequisites
 - name: Install required utility programs
+  become: yes
   apt: 
     pkg: "{{ item }}"
     update_cache: yes 
@@ -14,29 +15,35 @@
 
 # 3. Shibboleth Repository
 - name: Create download directory
+  become: yes
   file:
     path: /usr/local/dist
     state: directory
 
 - name: Download Switch Repository Key
+  become: yes
   get_url:
     url: http://pkg.switch.ch/switchaai/SWITCHaai-swdistrib.asc 
     dest: /usr/local/dist/SWITCHaai-swdistrib.asc
 
 - name: Add Repository Key
+  become: yes
   command: apt-key add /usr/local/dist/SWITCHaai-swdistrib.asc
 
 - name: Copy Repository
+  become: yes
   template:
     src: SWITCHaai-swdistrib.list.j2
     dest: /etc/apt/sources.list.d/SWITCHaai-swdistrib.list
 
 - name: Refresh Repository
+  become: yes
   apt: update_cache=yes
 
 
 # 4. Installation
 - name: Install Shibboleth
+  become: yes
   apt: 
     pkg: shibboleth
     update_cache: yes 
