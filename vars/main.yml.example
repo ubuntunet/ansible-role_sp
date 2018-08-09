@@ -1,7 +1,7 @@
 federation: MyFed
-fqdn: sp.example.com
+default_fqdn: sp.example.com
 
-entity_id: https://{{ fqdn }}/shibboleth
+entity_id: https://{{ fqdn | default('default_fqdn') }}/shibboleth
 
 support_first_name: Supp
 support_last_name: Orter
