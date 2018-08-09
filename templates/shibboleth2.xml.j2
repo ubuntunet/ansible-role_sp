@@ -51,7 +51,7 @@
 
             <SSO ECP="true"
                  discoveryProtocol="SAMLDS"
-                 discoveryURL="{{ default_ds_url }}">
+                 discoveryURL="{{ ds.url | default('default_ds_url') }}">
               SAML2
             </SSO>
 
