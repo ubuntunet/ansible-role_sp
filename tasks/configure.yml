@@ -104,8 +104,8 @@
 - name: Copy Federation Metadata signer certificate
   become: yes
   copy:
-    src: fedsigner.crt.pem
-    dest: /etc/shibboleth/fedsigner.crt.pem
+    src: "{{ fedsigner_cert }}"
+    dest: "/etc/shibboleth/{{ fedsigner_cert }}"
   notify: restart shibboleth
   tags: shibboleth_sp
 
