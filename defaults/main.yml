@@ -1,2 +1,5 @@
 ---
+default_fqdn: sp.example.com
 fedsigner_cert: fedsigner.crt.pem
+sp:
+  logo: logo-default.png

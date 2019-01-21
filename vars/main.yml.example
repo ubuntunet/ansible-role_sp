@@ -2,7 +2,7 @@ federation: MyFed
 fqdn: sp.example.com
 fedsigner_cert: fedsigner.crt.pem
 
-entity_id: https://{{ fqdn }}/shibboleth
+entity_id: https://{{ fqdn | default('default_fqdn') }}/shibboleth
 
 support_first_name: Supp
 support_last_name: Orter
