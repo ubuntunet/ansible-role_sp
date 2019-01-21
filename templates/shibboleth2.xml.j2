@@ -114,7 +114,7 @@
             backingFilePath="/etc/shibboleth/{{ metadata_file }}"
             reloadInterval="7200">
             <MetadataFilter type="RequireValidUntil" maxValidityInterval="P14D" />
-            <MetadataFilter type="Signature" certificate="fedsigner.crt.pem" />
+            <MetadataFilter type="Signature" certificate="{{ fedsigner_cert }}" />
             <DiscoveryFilter type="Blacklist" matcher="EntityAttributes" trimTags="true"
               attributeName="http://macedir.org/entity-category"
               attributeNameFormat="urn:oasis:names:tc:SAML:2.0:attrname-format:uri"

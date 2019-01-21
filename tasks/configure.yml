@@ -11,6 +11,7 @@
     module: stat
     path: "roles/shibboleth/files/{{ fqdn }}_sp-cert.pem"
   register: have_sign_cert
+  tags: shibboleth_sp
 
 - name: Check if there is a signing key locally
   become: False
@@ -18,6 +19,7 @@
     module: stat
     path: "roles/shibboleth/files/{{ fqdn }}_sp-key.pem"
   register: have_sign_key
+  tags: shibboleth_sp
 
 
 ################## Then < Copy existing certificates to remote #######################
@@ -26,12 +28,14 @@
     src: "{{ fqdn }}_sp-key.pem"
     dest: /etc/shibboleth/sp-key.pem
   when: (have_sign_cert.stat.exists == True) and (have_sign_key.stat.exists == True)
+  tags: shibboleth_sp
 
 - name: Copy signing certificate
   copy:
     src: "{{ fqdn }}_sp-cert.pem"
     dest: /etc/shibboleth/sp-cert.pem
   when: (have_sign_cert.stat.exists == True) and (have_sign_key.stat.exists == True)
+  tags: shibboleth_sp
 
 ############ Else > Create self-signed certificates ##################################
 
@@ -41,7 +45,7 @@
   args:
     creates: /etc/shibboleth/sp-key.pem
   when: (have_sign_cert.stat.exists == False) and (have_sign_key.stat.exists == False)
-
+  tags: shibboleth_sp
 
 - name: Copy signing cert to this machine, if it exists
   fetch:
@@ -49,6 +53,7 @@
     dest: "roles/shibboleth/files/{{ fqdn }}_sp-cert.pem"
     flat: yes
   when: (have_sign_cert.stat.exists == False) and (have_sign_key.stat.exists == False)
+  tags: shibboleth_sp
 
 - name: Copy signing key to this machine, if it exists
   fetch:
@@ -56,11 +61,13 @@
     dest: "roles/shibboleth/files/{{ fqdn }}_sp-key.pem"
     flat: yes
   when: (have_sign_cert.stat.exists == False) and (have_sign_key.stat.exists == False)
+  tags: shibboleth_sp
 
 - name: Copy Logo
   copy:
     src: "{{ sp.logo | default('logo-default.png')}}"
     dest: "/etc/shibboleth/{{ sp.logo }}"
+  tags: shibboleth_sp
 
 
 # 5. Shibboleth Configuration
@@ -69,34 +76,40 @@
     src: shibboleth2.xml.j2
     dest: /etc/shibboleth/shibboleth2.xml
   notify: restart shibboleth
+  tags: shibboleth_sp
 
 - name: Copy attribute-map file
   template:
     src: attribute-map.xml.j2
     dest: /etc/shibboleth/attribute-map.xml
   notify: restart shibboleth
+  tags: shibboleth_sp
 
 - name: Copy attribute-policy file
   template:
     src: attribute-policy.xml.j2
     dest: /etc/shibboleth/attribute-policy.xml
   notify: restart shibboleth
+  tags: shibboleth_sp
 
 - name: Copy Federation Metadata signer certificate
   copy:
     src: fedsigner.crt.pem
     dest: /etc/shibboleth/fedsigner.crt.pem
   notify: restart shibboleth
+  tags: shibboleth_sp
 
 - name: Download Metadata Backup File from RR 
   get_url:
     url: "{{ metadata_url }}"
     dest: "/etc/shibboleth/{{ metadata_file }}"
   notify: restart shibboleth
+  tags: shibboleth_sp
 
 - name: Hand /etc/shibboleth over to the _shibd user
   file:
     path: /etc/shibboleth
     owner: _shibd
     recurse: yes 
+  tags: shibboleth_sp
 

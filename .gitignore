@@ -1,4 +1,3 @@
 *.pem
-!fedsigner.crt.pem
 
 vars/main.yml

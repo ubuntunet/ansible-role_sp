@@ -1,5 +1,6 @@
 federation: MyFed
 fqdn: sp.example.com
+fedsigner_cert: fedsigner.crt.pem
 
 entity_id: https://{{ fqdn }}/shibboleth
 
@@ -15,7 +16,6 @@ technical_email: eduid@example.net
 
 default_ds_url: http://cds.example.net:8080/discovery/WAYF
 show_attribute_values: false
-metadata_url: https://rr.ubuntunet.net/signedmetadata/federation/{{ federation }}/metadata.xml
-#metadata_url: https://rr.ubuntunet.net/metadata/federation/{{ federation }}/metadata.xml
+metadata_url: https://registry.example.net/signedmetadata/federation/{{ federation }}/metadata.xml
 metadata_file: metadata.xml
 

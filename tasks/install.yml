@@ -11,28 +11,34 @@
   with_items:
     - ntp
     - unzip
+  tags: shibboleth_sp
 
 # 3. Shibboleth Repository
 - name: Create download directory
   file:
     path: /usr/local/dist
     state: directory
+  tags: shibboleth_sp
 
 - name: Download Switch Repository Key
   get_url:
     url: http://pkg.switch.ch/switchaai/SWITCHaai-swdistrib.asc 
     dest: /usr/local/dist/SWITCHaai-swdistrib.asc
+  tags: shibboleth_sp
 
 - name: Add Repository Key
   command: apt-key add /usr/local/dist/SWITCHaai-swdistrib.asc
+  tags: shibboleth_sp
 
 - name: Copy Repository
   template:
     src: SWITCHaai-swdistrib.list.j2
     dest: /etc/apt/sources.list.d/SWITCHaai-swdistrib.list
+  tags: shibboleth_sp
 
 - name: Refresh Repository
   apt: update_cache=yes
+  tags: shibboleth_sp
 
 
 # 4. Installation
@@ -41,5 +47,4 @@
     pkg: shibboleth
     update_cache: yes 
     cache_valid_time: 36000
-
-
+  tags: shibboleth_sp
